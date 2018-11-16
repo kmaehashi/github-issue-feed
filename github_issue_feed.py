@@ -2,6 +2,7 @@
 
 import argparse
 import os
+import pytz
 
 from github import Github
 from feedgen.feed import FeedGenerator
@@ -35,11 +36,14 @@ class IssueFeedGenerator(object):
         fg.link(href=repo.html_url)
 
         for issue in self._get_issues(repo):
+            updated = issue.created_at if conf.sort == 'created' else issue.updated_at
+
             fe = fg.add_entry()
             fe.id(issue.html_url)
             fe.title(issue.title)
             fe.content(issue.body)
             fe.link(href=issue.html_url)
+            fe.updated(updated.replace(tzinfo=pytz.UTC))
 
         return fg
 
