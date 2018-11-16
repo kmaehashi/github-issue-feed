@@ -2,10 +2,10 @@
 
 import argparse
 import os
-import pytz
 
 from github import Github
 from feedgen.feed import FeedGenerator
+import pytz
 
 
 class IssueFeedGenerator(object):
